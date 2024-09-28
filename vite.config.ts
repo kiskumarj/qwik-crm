@@ -7,7 +7,6 @@ import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import pkg from "./package.json";
-
 type PkgDep = Record<string, string>;
 const { dependencies = {}, devDependencies = {} } = pkg as any as {
   dependencies: PkgDep;
@@ -27,6 +26,13 @@ export default defineConfig(({ command, mode }): UserConfig => {
       // Put problematic deps that break bundling here, mostly those with binaries.
       // For example ['better-sqlite3'] if you use that in server functions.
       exclude: [],
+      include: [
+        'firebase/app',         // Firebase core
+        'firebase/auth',        // Firebase authentication
+        'firebase/firestore',   // Firebase Firestore (if needed)
+        'tailwindcss',          // TailwindCSS
+        '@tailwindcss/forms',
+      ]
     },
 
     /**
@@ -104,3 +110,4 @@ function errorOnDuplicatesPkgDeps(
     throw new Error(msg);
   }
 }
+   
